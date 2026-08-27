@@ -1,7 +1,11 @@
+from django.urls import path
 from accounts.apis.auth import UserLogin
-from rest_framework.routers import DefaultRouter
 
-r=DefaultRouter()
-r.register('user_login/',UserLogin,basename='user_login')
 
-urlpatterns = r.urls
+urlpatterns = [
+    path(
+        'user_login/',
+        UserLogin.as_view({'post': 'user_login'}),
+        name='user_login'
+    ),
+]

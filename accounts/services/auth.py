@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework.response import Response
+from rest_framework import status
 
 class UserAuth:
 
@@ -12,25 +13,28 @@ class UserAuth:
         password = self.request.data.get("password")
 
         if not username or not password:
-            return {
+            return Response(
+            {
                 "success": False,
                 "message": "Username and password are required."
-            }
-
-        user = authenticate(
-            username=username,
-            password=password
+            },
+            status=status.HTTP_400_BAD_REQUEST
         )
-
+        user = authenticate(
+        username=username,
+        password=password
+    )
         if user is None:
-            return {
+            return Response(
+            {
                 "success": False,
                 "message": "Invalid username or password."
-            }
-
+            },
+            status=status.HTTP_401_UNAUTHORIZED
+        )
         refresh = RefreshToken.for_user(user)
-
-        return {
+        return Response(
+        {
             "success": True,
             "message": "Login successful.",
             "access": str(refresh.access_token),
@@ -40,4 +44,6 @@ class UserAuth:
                 "username": user.username,
                 "email": user.email,
             }
-        }
+        },
+        status=status.HTTP_200_OK
+    )

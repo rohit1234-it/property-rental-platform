@@ -1,5 +1,6 @@
 from django.contrib import admin
-from property_rental_system.accounts.models.user import User
+from .models import User, UserProfile
 
-# Register your models here.
+
 admin.site.register(User)
+admin.site.register(UserProfile)

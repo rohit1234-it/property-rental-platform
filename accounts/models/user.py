@@ -62,21 +62,4 @@ class UserProfile(models.Model):
         related_name='profile'
     )
 
-    company_name = models.CharField(max_length=255)
-    state = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    address = models.TextField()
-
-    mobile_no = models.CharField(max_length=15)
-    phone_no = models.CharField(max_length=15, blank=True)
-    property_limit = models.IntegerField(default=0)
-    logo = models.ImageField(
-        upload_to='logos/',
-        blank=True,
-        null=True
-    )
-
-    user_url = models.URLField(blank=True)
-
-    def __str__(self):
-        return self.company_name
+   

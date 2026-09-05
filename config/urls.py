@@ -21,7 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('accounts.urls.auth')),
     path('api/',include('properties.urls.property')),
-    path('api/',include('rentals.urls.rentals'))
+    path('api/',include('rentals.urls.rentals')),
+    path('api/',include('interactions.urls.interactions')),
 
 
 ]

@@ -128,28 +128,34 @@ class PropertyService:
         )
             data['owner'] = self._request.user.id
             serializer = self.project_serializer_class(data=data)
+
             if serializer.is_valid():
-                with transaction.atomic():
-                    property_obj = Property.objects.create(
+               with transaction.atomic():
+                property_obj = Property.objects.create(
+                    owner=self._request.user,
                     **serializer.validated_data
                 )
-                    result_serializer = self.project_serializer_class(
-                property_obj
+                result_serializer = self.project_serializer_class(
+                        property_obj
             )
-                    return self.cust_response.success_response(
+                return self.cust_response.success_response(
                 result_serializer.data,
                 "Property created successfully!",
-                201)
-                return self.cust_response.error_response(
+                201
+            )
+            return self.cust_response.error_response(
             "Failed to create property. Validation failed.",
             serializer.errors,
-            400)
+            400
+        )
+
         except Exception as e:
             return self.cust_response.error_response(
             f"Failed to create property: {str(e)}",
             None,
             400
         )
+    
     def update_property(self, pk, partial=False):
         try:
             property_obj = Property.objects.select_related(

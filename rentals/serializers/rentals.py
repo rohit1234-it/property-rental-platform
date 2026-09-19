@@ -5,3 +5,8 @@ class RentalSerializer(serializers.ModelSerializer):
     class Meta:
         model=Rental
         fields='__all__'
+        read_only_fields = [
+            "owner",
+            "created_at",
+            "updated_at",
+        ]

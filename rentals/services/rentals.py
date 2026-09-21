@@ -123,33 +123,37 @@ class RentalService:
         try:
             data = (
             self._request.data.copy()
-            if hasattr(self._request.data, 'copy')
+            if hasattr(self._request.data, "copy")
             else dict(self._request.data)
         )
-            data['owner'] = self._request.user.id
             serializer = self.rental_serializer_class(data=data)
+
             if serializer.is_valid():
                 with transaction.atomic():
-                    rental_obj=Rental.objects.create(
+                    rental_obj = Rental.objects.create(
+                    owner=self._request.user,
                     **serializer.validated_data
                 )
                     result_serializer = self.rental_serializer_class(
-                rental_obj
+                        rental_obj
             )
                     return self.cust_response.success_response(
                 result_serializer.data,
-                "rental created successfully!",
-                201)
-            return self.cust_response.error_response(
+                "Rental created successfully!",
+                201
+            )
+                return self.cust_response.error_response(
             "Failed to create rental. Validation failed.",
             serializer.errors,
-            400)
+            400
+        )
         except Exception as e:
             return self.cust_response.error_response(
             f"Failed to create rental: {str(e)}",
             None,
             400
         )
+    
     def update_rentals(self, pk, partial=False):
         try:
             rental_obj = Rental.objects.select_related(

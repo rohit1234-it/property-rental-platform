@@ -14,10 +14,11 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
-).split(",")
+ALLOWED_HOSTS = [
+    "property-rental-platform-or91.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 # Application definition
 
@@ -137,6 +138,5 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-]
 
-CORS_ALLOW_CREDENTIALS = True
+]

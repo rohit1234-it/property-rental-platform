@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install packages
+        run: pip install -r requirements.txt
+
+      - name: Check code style (ruff)
+        run: ruff check . --exclude migrations
+
+      - name: Run tests (pytest)
+        run: pytest properties/tests -q
+        env:
+          SECRET_KEY: ci-fake-secret-key-not-real

@@ -1,9 +1,7 @@
-import re
 
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from accounts.models.user import User,UserProfile
 
 User = get_user_model()
 

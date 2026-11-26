@@ -1,9 +1,0 @@
-stages:
-  - hello
-
-hello_job:
-  stage: hello
-  image: python:3.12
-  script:
-    - echo "Hello from the GitLab robot"
-    - python --version
